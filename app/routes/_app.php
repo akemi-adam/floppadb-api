@@ -27,11 +27,11 @@ app()->post('/statements', function () {
 
     $data = array_map(function ($statement) {
         try {
-            $result = db()->query($statement)->get() ?: "The statement: $statement; was executed with successfuly!";
+            $result = db()->query($statement)->get() ?: [(object) ["Status" => "The statement: $statement; was executed with successfuly!"]];
 
             return $result;
         } catch (\PDOException $e) {
-            return $e->getMessage();
+            return [(object) ["Status" => $e->getMessage()]];
         }
     }, $statements);
 
